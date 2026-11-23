@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dos verdades y una mentira: Pablo y Juan</title>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EAF0F6;--ink:#17243D;--muted:#51607A;--card:#fff;--line:#C9D4E2;--p:#0B7A75;--j:#B02E5E;--on:#fff;--note:#FBE8A6;--noteink:#4A3B00;--ok:#1E7A3C;--bad:#B3261E;--btn:#17243D;--btnt:#fff;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root{--bg:#101827;--ink:#E7EDF7;--muted:#9AA9C2;--card:#18233A;--line:#2D3C58;--p:#4FD1C5;--j:#FF8FB5;--on:#101827;--note:#3A3217;--noteink:#F6E3A1;--ok:#6FD58F;--bad:#FF8A80;--btn:#E7EDF7;--btnt:#101827;color-scheme:dark}}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.5 "Atkinson Hyperlegible",system-ui,sans-serif}
+main{max-width:640px;margin:0 auto;padding:20px 16px 48px}
+h1,h2{font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.1;margin:0}
+h1{font-size:clamp(1.8rem,6vw,2.5rem);font-weight:800;margin-bottom:14px}
+button{font:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.btn{background:var(--btn);color:var(--btnt);border:0;padding:14px 18px;border-radius:12px;font-weight:700;width:100%}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line);width:auto;padding:6px 12px;font-size:.9rem}
+.card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:16px;margin-bottom:16px}
+.card ol{margin:8px 0 0;padding-left:22px}.card li{margin-bottom:6px}
+.roles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:480px){.roles{grid-template-columns:1fr}}
+.role{border:3px solid;border-radius:14px;background:var(--card);color:var(--ink);padding:26px 12px;font:800 1.5rem "Bricolage Grotesque",sans-serif}
+.role.P{border-color:var(--p)}.role.J{border-color:var(--j)}
+.prog{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;color:var(--muted);font-weight:700}
+.bar{height:8px;background:var(--line);border-radius:4px;margin-bottom:14px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ink)}
+.banner{color:var(--on);border-radius:14px;padding:16px;margin-bottom:14px}
+.banner.P{background:var(--p)}.banner.J{background:var(--j)}
+.banner h2{font-size:1.7rem}.banner p{margin:4px 0 0}
+.ph{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:center;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px}
+.ph .n{font:800 1.8rem "Bricolage Grotesque",sans-serif;grid-row:span 2}
+.ph .t{font-size:1.25rem}.ph .t u{text-decoration:none;display:inline-block;min-width:3.5em;border-bottom:2px solid var(--ink)}
+.ph .t b{color:var(--ok)}
+.ph small{color:var(--muted)}
+.tag{font-weight:700;font-size:.85rem;border-radius:6px;padding:2px 8px;margin-left:6px}
+.tag.v{background:color-mix(in srgb,var(--ok) 20%,transparent);color:var(--ink)}
+.tag.m{background:color-mix(in srgb,var(--bad) 20%,transparent);color:var(--ink)}
+.ph button{grid-column:2;justify-self:start;background:transparent;border:2px solid var(--line);color:var(--ink);border-radius:8px;padding:2px 10px;font-size:.9rem}
+.lbl{color:var(--muted);margin:0 0 12px}
+.cg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:6px}
+.clue{background:var(--note);color:var(--noteink);border-radius:12px;padding:12px 6px;text-align:center;font-weight:700;line-height:1.25}
+.clue .e{display:block;font-size:2.5rem;line-height:1.2;margin-bottom:4px}
+.qs{background:var(--card);border:2px dashed var(--line);border-radius:12px;padding:10px 14px;margin:14px 0}
+.guess{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:8px 0 12px}
+.guess button{padding:16px 0;border-radius:12px;border:3px solid var(--ink);background:var(--card);color:var(--ink);font:800 1.8rem "Bricolage Grotesque",sans-serif}
+.guess button:disabled{cursor:default}
+.guess button.pick{background:var(--btn);color:var(--btnt)}
+.res{padding:12px 14px;border-radius:12px;font-weight:700;margin-bottom:12px}
+.res.ok{background:color-mix(in srgb,var(--ok) 20%,transparent);border:2px solid var(--ok)}
+.res.no{background:color-mix(in srgb,var(--bad) 18%,transparent);border:2px solid var(--bad)}
+.sync{color:var(--muted);text-align:center;margin:8px 0 0;font-size:.95rem}
+.final{text-align:center;padding:24px;border:3px solid var(--ink);border-radius:14px;background:var(--card)}
+.final b{font:800 3rem "Bricolage Grotesque",sans-serif;display:block}
+.clue{position:relative}
+.eye{position:absolute;top:2px;right:2px;background:transparent;border:0;font-size:1.1rem;padding:6px;line-height:1;color:var(--noteink)}
+.tr{display:block;margin-top:6px;padding-top:6px;border-top:1px solid color-mix(in srgb,var(--noteink) 35%,transparent);font-weight:400;font-style:italic}
+.hide{display:none}
+</style>
+</head>
+<body>
+<main>
+<h1>Dos verdades y una mentira</h1>
+
+<section id="menu">
+<div class="card"><h2>Инструкция</h2><ol>
+<li>Играют двое. Один нажимает <b>Alumno A (Pablo)</b>, другой <b>Alumno B (Juan)</b>. Каждый играет на своём устройстве и <b>не смотрит в экран партнёра</b>.</li>
+<li>Игра идёт по порядку: 4 раунда, в каждом говорит сначала A, потом B. Когда оба закончили ход, <b>нажмите «Siguiente» одновременно</b>.</li>
+<li><b>Если сверху «TÚ HABLAS»:</b> прочитай вслух три фразы. В каждой пропущен глагол: вставь его в нужной форме («я»). Не помнишь? Нажми «Mostrar respuesta». Одна фраза ложная (это отмечено на твоём экране).</li>
+<li><b>Если сверху «TÚ ERES DETECTIVE»:</b> слушай три фразы и смотри на подсказки: это картинки с короткими словами, они показывают правду о партнёре. Сравни их с тем, что он говорит. Нажми 👁 на карточке, чтобы увидеть перевод на русский. Задай 2 вопроса, на которые можно ответить «sí» или «no» (например: <i>¿Eres profesor?</i>). Потом нажми номер фразы, которая, по-твоему, ложная. Игра сама покажет, прав ты или нет.</li>
+<li>Говорите только по-испански!</li></ol></div>
+<div class="roles">
+<button class="role P" onclick="start('P')">Alumno A</button>
+<button class="role J" onclick="start('J')">Alumno B</button>
+</div>
+</section>
+
+<section id="play" class="hide">
+<div class="prog"><span id="rnd"></span><button class="btn ghost" onclick="menu()">Menú</button></div>
+<div class="bar"><i id="fill"></i></div>
+<div id="game"></div>
+</section>
+</main>
+<script>
+var N={P:"Pablo",J:"Juan"};
+/* f: [frase con {}, verbo, respuesta, verdad(1)/mentira(0)] */
+var R=[
+{P:{f:[["{} profesor.","ser","Soy",1],["{} argentino.","ser","Soy",0],["{} alto y moreno.","ser","Soy",1]],
+cl:[["🇲🇽","México","Мексика"],["🏫","colegio","школа"],["📏","alto, pelo negro","высокий, чёрные волосы"]]},
+J:{f:[["{} rubio.","ser","Soy",0],["{} estudiante.","ser","Soy",1],["{} colombiano.","ser","Soy",1]],
+cl:[["🇨🇴","Colombia","Колумбия"],["🎒","universidad","университет"],["🧑","pelo negro","чёрные волосы"]]}},
+{P:{f:[["{} en Madrid.","estar","Estoy",1],["{} cansado.","estar","Estoy",1],["Hoy {} en la playa.","estar","estoy",0]],
+cl:[["🏙️","Madrid","Мадрид"],["🛋️","en casa","дома"],["😴","cansado","уставший"]]},
+J:{f:[["{} muy tranquilo.","estar","Estoy",0],["{} en la biblioteca.","estar","Estoy",1],["Mi familia {} en Colombia.","estar","está",1]],
+cl:[["📚","biblioteca","библиотека"],["😰","examen mañana","экзамен завтра"],["👨‍👩‍👧","familia: Colombia","семья: Колумбия"]]}},
+{P:{f:[["{} un gato.","tener","Tengo",0],["{} 30 años.","tener","Tengo",1],["{} dos hermanos.","tener","Tengo",1]],
+cl:[["🎂","30 años","30 лет"],["👦👦","dos hermanos","два брата"],["🐕","perro","собака"]]},
+J:{f:[["{} 25 años.","tener","Tengo",1],["{} una hermana.","tener","Tengo",1],["{} un coche.","tener","Tengo",0]],
+cl:[["🎂","25 años","25 лет"],["👭","una hermana: Laura","одна сестра: Лаура"],["🚲","bici","велосипед"]]}},
+{P:{f:[["{} en un colegio.","trabajar","Trabajo",1],["{} en Valencia.","vivir","Vivo",0],["{} novelas por la noche.","leer","Leo",1]],
+cl:[["🏫","colegio","школа"],["🚇","Madrid","Мадрид"],["📖","novelas","романы"]]},
+J:{f:[["{} los domingos.","correr","Corro",1],["{} informática.","estudiar","Estudio",1],["{} solo.","vivir","Vivo",0]],
+cl:[["🏃","domingo: correr","воскресенье: бегать"],["💻","informática","информатика"],["👥","tres personas en casa","три человека дома"]]}}
+];
+var S={me:null,t:0,rev:{},res:{},tr:{}};
+var $=function(i){return document.getElementById(i)};
+function who(t){return t%2?"J":"P"}
+function lie(d){for(var i=0;i<3;i++)if(!d.f[i][3])return i}
+function start(me){S={me:me,t:0,rev:{},res:{},tr:{}};$("menu").classList.add("hide");$("play").classList.remove("hide");render()}
+function menu(){$("play").classList.add("hide");$("menu").classList.remove("hide")}
+function next(){S.t++;window.scrollTo(0,0);render()}
+function show(i){S.rev[S.t+"-"+i]=!S.rev[S.t+"-"+i];render()}
+function tr(i){S.tr[S.t+'-'+i]=!S.tr[S.t+'-'+i];render()}
+function pick(i){if(S.res[S.t]===undefined){S.res[S.t]=i;render()}}
+function render(){
+var t=S.t;
+if(t>=8){var sc=0;for(var k in S.res)if(S.res[k]===lie(R[k>>1][who(+k)]))sc++;
+$("rnd").textContent="Fin";$("fill").style.width="100%";
+$("game").innerHTML='<div class="final"><h2>¡Fin del juego!</h2><b>'+sc+' / 4</b><p>Mentiras detectadas. Compara con tu compañero.</p><button class="btn" onclick="start(S.me)">Jugar otra vez</button></div>';return}
+var r=t>>1,w=who(t),me=S.me,d=R[r][w],h="";
+$("rnd").textContent="Ronda "+(r+1)+" de 4";
+$("fill").style.width=(t/8*100)+"%";
+if(w===me){
+h='<div class="banner '+me+'"><h2>TÚ HABLAS</h2><p>Lee las tres frases en voz alta.</p></div>'+d.f.map(function(x,i){var o=S.rev[t+"-"+i],txt=x[0].replace("{}",o?'<b>'+x[2]+'</b>':'<u></u>');return '<div class="ph"><span class="n">'+(i+1)+'</span><span class="t">'+txt+'<span class="tag '+(x[3]?"v":"m")+'">'+(x[3]?"Verdad":"Mentira")+'</span></span><small>verbo: '+x[1]+'</small><button onclick="show('+i+')">'+(o?"Ocultar":"Mostrar respuesta")+'</button></div>'}).join("");
+}else{
+var g=S.res[t],L=lie(d);
+h='<div class="banner '+me+'"><h2>TÚ ERES DETECTIVE</h2><p>Escucha a '+N[w]+'.</p></div><p class="lbl">Pistas: información verdadera sobre '+N[w]+'.</p>'+'<div class="cg">'+d.cl.map(function(c,i){var o=S.tr[t+"-"+i];return '<div class="clue"><button class="eye" onclick="tr('+i+')" aria-label="'+(o?"Ocultar traducción":"Ver traducción al ruso")+'">👁</button><span class="e" aria-hidden="true">'+c[0]+'</span>'+c[1]+(o?'<span class="tr">'+c[2]+'</span>':'')+'</div>'}).join("")+'</div>'+'<div class="qs"><b>Haz 2 preguntas de sí o no.</b><br>Ejemplos: «¿Eres alto?» «¿Tienes un gato?» «¿Vives en Madrid?»</div><p><b>¿Cuál es la mentira?</b></p><div class="guess">'+[0,1,2].map(function(i){return '<button '+(g!==undefined?'disabled ':'')+'class="'+(g===i?"pick":"")+'" onclick="pick('+i+')" aria-label="Frase '+(i+1)+'">'+(i+1)+'</button>'}).join("")+'</div>'+(g===undefined?"":'<div class="res '+(g===L?"ok":"no")+'">'+(g===L?"✅ ¡Correcto!":"❌ No. La mentira es la frase "+(L+1)+".")+'</div>');
+}
+var can=w===me||S.res[t]!==undefined;
+h+=(can?'<button class="btn" onclick="next()">'+(t===7?"Terminar":"Siguiente")+'</button><p class="sync">Pulsad «Siguiente» a la vez.</p>':'<p class="sync">Elige un número para continuar.</p>');
+$("game").innerHTML=h;
+}
+</script>
+</body>
+</html>
